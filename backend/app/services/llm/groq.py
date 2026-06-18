@@ -39,6 +39,8 @@ class GroqProvider(LLMProvider):
 
         with httpx.Client(timeout=120.0) as client:
             resp = client.post(f"{self.base_url}/chat/completions", json=payload, headers=headers)
+            if resp.status_code == 400:
+                raise RuntimeError(f"Groq: model '{payload['model']}' not found. Check available models at console.groq.com")
             resp.raise_for_status()
             data = resp.json()
             return data.get("choices", [{}])[0].get("message", {}).get("content", "")
@@ -59,6 +61,9 @@ class GroqProvider(LLMProvider):
 
         with httpx.Client(timeout=120.0) as client:
             with client.stream("POST", f"{self.base_url}/chat/completions", json=payload, headers=headers) as resp:
+                if resp.status_code == 400:
+                    yield f"Groq: model '{payload['model']}' not found. Check available models at console.groq.com"
+                    return
                 resp.raise_for_status()
                 for line in resp.iter_lines():
                     if line.startswith("data: "):
