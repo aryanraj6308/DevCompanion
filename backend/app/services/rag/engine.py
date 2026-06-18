@@ -1,7 +1,5 @@
-import uuid
 import hashlib
 from typing import List, Optional
-from app.services.rag.embedder import get_embedder
 from app.services.rag.chroma_client import get_chroma
 from app.config import CHUNK_SIZE, CHUNK_OVERLAP
 
@@ -9,7 +7,6 @@ from app.config import CHUNK_SIZE, CHUNK_OVERLAP
 class RAGEngine:
     def __init__(self, collection_name: str = "project_knowledge"):
         self.collection_name = collection_name
-        self.embedder = get_embedder()
         self.chroma = get_chroma()
         self.collection = self.chroma.get_or_create_collection(collection_name)
 
@@ -50,9 +47,8 @@ class RAGEngine:
         return len(chunks)
 
     def query(self, query_text: str, n_results: int = 5) -> List[dict]:
-        query_embedding = self.embedder.embed(query_text)
         results = self.collection.query(
-            query_embeddings=[query_embedding],
+            query_texts=[query_text],
             n_results=n_results,
         )
 

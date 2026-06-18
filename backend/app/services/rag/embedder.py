@@ -1,29 +1,20 @@
 from functools import lru_cache
-from app.config import EMBEDDING_MODEL
+from chromadb.utils.embedding_functions import ONNXMiniLM_L6_V2
 
 
 class Embedder:
-    def __init__(self, model_name: str = None):
-        self.model_name = model_name or EMBEDDING_MODEL
-        self._model = None
-
-    def _load(self):
-        if self._model is None:
-            from sentence_transformers import SentenceTransformer
-            self._model = SentenceTransformer(self.model_name)
+    def __init__(self):
+        self._model = ONNXMiniLM_L6_V2(preferred_providers=["CPUExecutionProvider"])
 
     def embed(self, text: str) -> list:
-        self._load()
-        return self._model.encode(text).tolist()
+        return self._model([text])[0]
 
     def embed_batch(self, texts: list) -> list:
-        self._load()
-        return self._model.encode(texts).tolist()
+        return self._model(texts)
 
     @property
     def dimension(self) -> int:
-        self._load()
-        return self._model.get_sentence_embedding_dimension()
+        return 384
 
 
 @lru_cache()
