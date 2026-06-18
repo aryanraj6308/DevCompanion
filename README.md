@@ -1,95 +1,16 @@
-# Local AI Engineer
+# React + Vite
 
-A free, local-first Personal AI Software Engineer Agent. Runs entirely on your machine using Ollama for LLM inference and ChromaDB for RAG.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- **AI Coding Assistant** — Generate, explain, debug, and refactor code
-- **Project Architect** — Design architectures, plan projects, suggest tech stacks
-- **RAG Memory System** — Index your project files and query them
-- **Learning Mode** — Learn programming concepts and understand errors
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Tech Stack
+## React Compiler
 
-| Component | Technology |
-|-----------|------------|
-| Frontend | React + Vite + TailwindCSS |
-| Backend | FastAPI (Python) |
-| Database | SQLite |
-| Vector DB | ChromaDB |
-| Embeddings | all-MiniLM-L6-v2 (local) |
-| LLM | Ollama (Qwen, DeepSeek, Llama, etc.) |
-| Optional LLM | Groq API (free tier available) |
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Prerequisites
+## Expanding the ESLint configuration
 
-- Python 3.10+
-- Node.js 18+
-- [Ollama](https://ollama.com) installed
-
-## Quick Start
-
-```bash
-# 1. Install Ollama and pull a model
-ollama pull qwen2.5:7b
-
-# 2. Install backend dependencies
-cd backend
-pip install -r requirements.txt
-
-# 3. Start the backend
-uvicorn app.main:app --reload
-
-# 4. In a new terminal, install & start the frontend
-cd frontend
-npm install
-npm run dev
-
-# 5. Open http://localhost:5173
-```
-
-## Optional: Groq API
-
-Copy `backend/.env.example` to `backend/.env` and add your Groq API key for an additional LLM provider option.
-
-```
-GROQ_API_KEY=gsk_your_key_here
-```
-
-## Setup Script (Windows)
-
-Double-click `setup.bat` to install all dependencies automatically.
-
-## Project Structure
-
-```
-local-ai-engineer/
-├── backend/
-│   └── app/
-│       ├── main.py              # FastAPI entry point
-│       ├── config.py            # Configuration
-│       ├── db/                  # SQLite database
-│       ├── models/              # Pydantic schemas
-│       ├── routers/             # API routes
-│       └── services/
-│           ├── llm/             # LLM providers (Ollama, Groq)
-│           ├── rag/             # RAG engine (ChromaDB)
-│           └── tools/           # AI tools
-├── frontend/
-│   └── src/
-│       ├── api/                 # API client
-│       ├── components/          # React components
-│       └── App.jsx              # Main app
-├── setup.bat
-└── README.md
-```
-
-## Memory Requirements
-
-- Ollama (7B model): ~4-6GB RAM
-- all-MiniLM-L6-v2: ~200MB
-- Python backend: ~200MB
-- Node frontend: ~100MB
-- **Total: ~5-7GB** (varies by model size)
-
-For lower RAM usage, use a smaller model: `ollama pull qwen2.5:3b` or `ollama pull deepseek-coder:1.3b`.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
