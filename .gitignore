@@ -2,7 +2,10 @@ __pycache__/
 *.pyc
 *.pyo
 .env
-backend/data/
+backend/data/chroma/
+backend/data/engineer.db
+backend/data/__pycache__/
+!backend/data/skills/
 frontend/dist/
 frontend/node_modules/
 *.db
